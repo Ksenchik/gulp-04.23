@@ -25,7 +25,7 @@ const paths = {
    },
    styles: {
       src: 'src/css/**/*.scss',
-      dest: 'dist/css/'
+      dest: 'dist/css/css/'
    },
    scripts: {      
       src: 'src/js/**/*.js',
