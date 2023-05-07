@@ -1,19 +1,22 @@
-const gulp = require('gulp');
-const scss = require('gulp-sass')(require('sass'));
-const autoprefixer = require('gulp-autoprefixer');
-const concat = require('gulp-concat');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const webpack = require('webpack-stream');
-const sourcemaps = require('gulp-sourcemaps');
-const imagemin = require('gulp-imagemin');
-const htmlmin = require('gulp-htmlmin');
-const newer = require('gulp-newer');
-const browserSync = require('browser-sync').create();
-const del = require('del');
-const svgSprite = require('gulp-svg-sprite');
-const cheerio = require('gulp-cheerio');
-const replace = require('gulp-replace');
+import gulp from 'gulp';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import autoprefixer from 'gulp-autoprefixer';
+import concat from 'gulp-concat';
+import babel from 'gulp-babel';
+import uglify from 'gulp-uglify';
+import webpack from 'webpack-stream';
+import sourcemaps from 'gulp-sourcemaps';
+import imagemin from 'gulp-imagemin';
+import htmlmin from 'gulp-htmlmin';
+import newer from 'gulp-newer';
+import browserSyncs from 'browser-sync';
+import del from 'del';
+import svgSprite from 'gulp-svg-sprite';
+import cheerio from 'gulp-cheerio';
+import replace from 'gulp-replace';
+
+const browserSync = browserSyncs.create();
 
 const styleFiles = ['src/css/main.scss']
 const jsFile = ['src/js/main.js']
@@ -55,6 +58,7 @@ function html(){
    .pipe(browserSync.stream())
 }
 
+const scss = gulpSass(dartSass);
 function styles(){
    return gulp.src(styleFiles)
    .pipe(sourcemaps.init())
@@ -140,13 +144,16 @@ function watch(){
 
 const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), cleanSvg, watch)
 
-exports.clean = clean
-exports.cleanSvg = cleanSvg
-exports.img = img
-exports.html = html
-exports.styles = styles
-exports.scripts = scripts
-exports.svg = svg
-exports.watch = watch
-exports.build = build
-exports.default = build
+// exports.clean = clean
+// exports.cleanSvg = cleanSvg
+// exports.img = img
+// exports.html = html
+// exports.styles = styles
+// exports.scripts = scripts
+// exports.svg = svg
+// exports.watch = watch
+// exports.build = build
+// exports.default = build
+
+gulp.task('default', build);
+export {build, svg}
