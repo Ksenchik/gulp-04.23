@@ -15,6 +15,9 @@ import del from 'del';
 import svgSprite from 'gulp-svg-sprite';
 import cheerio from 'gulp-cheerio';
 import replace from 'gulp-replace';
+import fs from 'fs';
+import fonter from "gulp-fonter";
+import ttf2woff2 from 'gulp-ttf2woff2';
 
 const browserSync = browserSyncs.create();
 
@@ -50,6 +53,8 @@ function clean(){
 function cleanSvg(){
    return del(['dist/assets/svgSprite/*', '!dist/assets/svgSprite/sprite.svg'])
 }
+
+
 
 function html(){
    return gulp.src(paths.html.src)
@@ -129,6 +134,11 @@ function svg(){
    .pipe(gulp.dest(paths.svg.dest))
 }
 
+function vendor() {
+   return gulp.src('src/vendor/**/*')
+       .pipe(gulp.dest('dist/vendor'));
+}
+
 function watch(){
    browserSync.init({
       server: {
@@ -142,7 +152,7 @@ function watch(){
    gulp.watch(paths.img.src, img)
 }
 
-const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), cleanSvg, watch)
+const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img, vendor), watch);
 
 // exports.clean = clean
 // exports.cleanSvg = cleanSvg
